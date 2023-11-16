@@ -29,3 +29,7 @@ for col in visualization_columns:
     null_percentage = (df[col].isnull().sum() / len(df)) * 100
     null_count = df[col].isnull().sum()
     print(f"Column: '{col}' | Percentage of rows with null values: {null_percentage:.2f}% | Number of null values: {null_count}")
+
+# Fill null values in 'Vict Sex' and 'Vict Descent' with 'X' for unknown
+df['Vict Sex'].fillna('X', inplace=True)
+df['Vict Descent'].fillna('X', inplace=True)
