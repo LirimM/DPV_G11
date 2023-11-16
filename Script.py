@@ -9,7 +9,7 @@ df = pd.read_csv(file_path)
 null_counts = df.isnull().sum()
 duplicate_count = df.duplicated().sum()
 
-print(f"Number of null rows: '{null_counts}' | Number of duplicate rows: {duplicate_count}")
+print(f"Number of null rows \n'{null_counts}' \nNumber of duplicate rows: {duplicate_count}")
 
 # Visualizing the amount of null & duplicate values for each column in the dataset
 plt.figure(figsize = (12, 6))
@@ -33,3 +33,17 @@ for col in visualization_columns:
 # Fill null values in 'Vict Sex' and 'Vict Descent' with 'X' for unknown
 df['Vict Sex'].fillna('X', inplace=True)
 df['Vict Descent'].fillna('X', inplace=True)
+
+# Calculate average age excluding rows where 'Vict Age' is 0
+average_age = df[df['Vict Age'] != 0]['Vict Age'].mean()
+
+# Count the number of rows affected
+rows_affected = len(df[df['Vict Age'] == 0])
+
+# Fill null values and rows with 'Vict Age' as 0 with the calculated average
+df['Vict Age'].replace(0, pd.NA, inplace = True)
+df['Vict Age'].fillna(average_age, inplace = True)
+
+# Print the average age and the number of rows affected
+print(f"\nAverage Age: {average_age:.2f}")
+print(f"Number of rows with 'Vict Age' as 0: {rows_affected}")
