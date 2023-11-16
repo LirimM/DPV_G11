@@ -21,3 +21,11 @@ plt.ylabel('Count')
 plt.xticks(rotation = 45, ha = 'right')
 plt.legend()
 plt.show()
+
+# Print the percentage and number of null values for specified columns
+visualization_columns = ['Vict Sex', 'Vict Descent', 'DATE OCC', 'AREA NAME']
+
+for col in visualization_columns:
+    null_percentage = (df[col].isnull().sum() / len(df)) * 100
+    null_count = df[col].isnull().sum()
+    print(f"Column: '{col}' | Percentage of rows with null values: {null_percentage:.2f}% | Number of null values: {null_count}")
