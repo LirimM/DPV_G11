@@ -72,15 +72,6 @@ df = df[visualization_columns]
 sex_mapping = {'M': 1, 'F': 2, 'X': 0}
 df['Vict Sex'] = df['Vict Sex'].map(sex_mapping)
 
-# Sampling (Example: Randomly sample 10% of the dataset)
-sampled_df = df.sample(frac=0.1, random_state=42)
-
-# Save the Sample dataset as a new CSV file
-new_file_path_sample = "Sample_Crime_Data.csv"
-df.to_csv(new_file_path_sample, index=False)
-
-print(f"\nFile saved as '{new_file_path_sample}'")
-
 # Save the modified dataset as a new CSV file
 new_file_name = "Preprocessed_Data.csv"
 df.to_csv(new_file_name, index = False)
