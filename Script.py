@@ -47,3 +47,11 @@ df['Vict Age'].fillna(average_age, inplace = True)
 # Print the average age and the number of rows affected
 print(f"\nAverage Age: {average_age:.2f}")
 print(f"Number of rows with 'Vict Age' as 0: {rows_affected}")
+
+# Convert 'DATE OCC' to datetime format
+df['DATE OCC'] = pd.to_datetime(df['DATE OCC'], errors='coerce')
+
+# Remove rows based on 'DATE OCC' range
+initial_rows = len(df)
+df = df[(df['DATE OCC'].dt.year >= 2020) & (df['DATE OCC'].dt.year <= 2022)]
+
