@@ -53,7 +53,7 @@ print(f"\nAverage Age: {average_age:.2f}")
 
 
 # Convert 'DATE OCC' to datetime format
-df['DATE OCC'] = pd.to_datetime(df['DATE OCC'], errors='coerce')
+df['DATE OCC'] = pd.to_datetime(df['DATE OCC'], format='%m/%d/%Y %I:%M:%S %p', errors='coerce')
 
 # Remove rows based on 'DATE OCC' range
 initial_rows = len(df)
