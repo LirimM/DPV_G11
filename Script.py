@@ -64,3 +64,12 @@ removed_rows = initial_rows - len(df)
 removed_percentage = (removed_rows / initial_rows) * 100
 
 print(f"\nRows removed based on 'DATE OCC' range (2020-2022): {removed_rows} \nPercentage of removed rows: {removed_percentage:.2f}%")
+
+# Select only the columns in visualization_columns
+df = df[visualization_columns]
+
+# Save the modified dataset as a new CSV file
+new_file_name = "Preprocessed_Data.csv"
+df.to_csv(new_file_name, index = False)
+
+print(f"\nFile saved as '{new_file_name}'")
