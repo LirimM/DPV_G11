@@ -55,16 +55,6 @@ print(f"\nAverage Age: {average_age:.2f}")
 # Convert 'DATE OCC' to datetime format
 df['DATE OCC'] = pd.to_datetime(df['DATE OCC'], format='%m/%d/%Y %I:%M:%S %p', errors='coerce')
 
-# Remove rows based on 'DATE OCC' range
-initial_rows = len(df)
-df = df[(df['DATE OCC'].dt.year >= 2020) & (df['DATE OCC'].dt.year <= 2022)]
-
-# Count and print the number and percentage of rows removed based on 'DATE OCC' range
-removed_rows = initial_rows - len(df)
-removed_percentage = (removed_rows / initial_rows) * 100
-
-print(f"\nRows removed based on 'DATE OCC' range (2020-2022): {removed_rows} \nPercentage of removed rows: {removed_percentage:.2f}%")
-
 # Select only the columns in visualization_columns
 df = df[visualization_columns]
 
