@@ -62,6 +62,77 @@ df = df[visualization_columns]
 sex_mapping = {'M': 1, 'F': 2, 'X': 0}
 df['Vict Sex'] = df['Vict Sex'].map(sex_mapping)
 
+# Sample a subset of your data for faster visualization and testing
+sample_size = 10000
+df_sample = df.sample(sample_size, random_state=42)
+
+# Visualize class distribution before SMOTE for the sample
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+df_sample['Vict Sex'].value_counts().plot(kind='bar', color=['skyblue', 'salmon'])
+plt.title('Class Distribution Before SMOTE (Sample)')
+plt.xlabel('Vict Sex')
+plt.ylabel('Count')
+
+# Prepare data for modeling
+X_sample = pd.get_dummies(df_sample.drop(['Vict Sex'], axis=1))
+y_sample = df_sample['Vict Sex']
+
+# Handle NaN values using simple imputation
+imputer = SimpleImputer(strategy='mean')  # You can use other strategies as needed
+X_sample_imputed = pd.DataFrame(imputer.fit_transform(X_sample.drop(['DATE OCC'], axis=1)), columns=X_sample.columns[:-1])
+
+# Concatenate the 'DATE OCC' column back to the imputed DataFrame
+X_sample_imputed['DATE OCC'] = X_sample['DATE OCC']
+
+# Determine the appropriate number of neighbors
+n_neighbors = min(5, X_sample_imputed.shape[0] - 1)  # Set an appropriate maximum value
+if n_neighbors >= X_sample_imputed.shape[0]:
+    n_neighbors = X_sample_imputed.shape[0] - 1
+
+# Split the sample dataset into training and testing sets
+X_train_sample, X_test_sample, y_train_sample, y_test_sample = train_test_split(
+    X_sample_imputed, y_sample, test_size=0.2, random_state=42
+)
+
+# Exclude 'DATE OCC' column before SMOTE
+X_train_sample_no_date = X_train_sample.drop(['DATE OCC'], axis=1)
+
+# Determine the appropriate number of neighbors
+n_neighbors = min(5, X_sample_imputed.shape[0] - 1)  # Set an appropriate maximum value
+if n_neighbors >= X_sample_imputed.shape[0]:
+    n_neighbors = X_sample_imputed.shape[0] - 1
+
+# Check if n_neighbors is less than the number of samples
+if n_neighbors >= X_train_sample_no_date.shape[0]:
+    n_neighbors = X_train_sample_no_date.shape[0] - 1
+
+# Ensure that n_neighbors is greater than 1 (SMOTE requires at least 2 neighbors)
+n_neighbors = max(2, n_neighbors)
+
+# Apply SMOTE to balance the sample dataset
+smote = SMOTE(random_state=42, k_neighbors=min(n_neighbors, X_train_sample_no_date.shape[0] - 1))
+X_train_resampled_sample_no_date, y_train_resampled_sample = smote.fit_resample(
+    X_train_sample_no_date, y_train_sample
+)
+
+# Reset the index of X_train_sample before concatenation
+X_train_sample_reset_index = X_train_sample.reset_index(drop=True)
+
+# Concatenate 'DATE OCC' column back to the resampled features
+X_train_resampled_sample = pd.concat([X_train_resampled_sample_no_date, X_train_sample_reset_index['DATE OCC']], axis=1)
+
+
+# Visualize class distribution after SMOTE for the sample
+plt.subplot(1, 2, 2)
+pd.Series(y_train_resampled_sample).value_counts().plot(kind='bar', color=['skyblue', 'salmon'])
+plt.title('Class Distribution After SMOTE (Sample)')
+plt.xlabel('Vict Descent')
+plt.ylabel('Count')
+
+plt.tight_layout()
+plt.show()
+
 # Save the modified dataset as a new CSV file
 new_file_name = "Preprocessed_Data.csv"
 df.to_csv(new_file_name, index = False)
