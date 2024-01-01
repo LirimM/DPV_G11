@@ -1,5 +1,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+from imblearn.over_sampling import SMOTE
+from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
+from scipy import stats
+import numpy as np from sklearn.preprocessing import LabelEncoder
 
 # Load the dataset
 file_path = "Crime_Data_from_2020_to_Present_20231113.csv"
@@ -134,13 +140,80 @@ plt.tight_layout()
 plt.show()
 
 # Count the number of rows with 'Vict Age' as -1
-rows_age= len(df[df['Vict Age'] == -1])
+rows_age = len(df[df['Vict Age'] == -1])
 
 # Rows with 'Vict Age' as 0
 print(f"\nNumber of rows with 'Vict Age' as -1: {rows_age}")
 
 # Remove rows where 'Vict Age' is -1
 df = df[df['Vict Age'] != -1]
+
+# Z-score for victim age
+numerical_columns = ['Vict Age']
+z_scores = stats.zscore(df[numerical_columns])
+
+# Z-score threshold so we can identify outliers (e.g 3 standard deviations)
+z_threshold = 3
+
+# Identifying outliers based on the previously set z-score
+outliers = (abs(z_scores) > z_threshold).any(axis = 1)
+
+# Print the number of outliers and their indices
+print(f"\nNumber of outliers: {outliers.sum()}")
+print("Indices of outliers:")
+print(df.index[outliers])
+
+# Create subplots
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(14, 10))
+
+# Distribution of victim's age visualized, before removing outliers
+axes[0, 0].hist(df['Vict Age'], bins = 20, color = 'skyblue', edgecolor = 'black')
+axes[0, 0].set_title('Distribution of Vict Age Before Removing Outliers')
+axes[0, 0].set_xlabel('Vict Age')
+axes[0, 0].set_ylabel('Count')
+
+# Visualize the distribution of 'Vict Descent' before removing outliers
+sns.countplot(data=df, x='Vict Descent', color='skyblue', ax=axes[0, 1])
+axes[0, 1].set_title('Distribution of Vict Descent Before Removing Outliers')
+axes[0, 1].set_xlabel('Vict Descent')
+axes[0, 1].set_ylabel('Count')
+
+# Remove outliers
+df_no_outliers = df[~outliers]
+
+# Remove 'Vict Descent' categories representing less than 3% of the total numbers
+total_counts = df_no_outliers['Vict Descent'].value_counts()
+threshold_percentage = 3
+valid_categories = total_counts[total_counts / len(df_no_outliers) >= threshold_percentage / 100].index
+df_no_outliers_filtered = df_no_outliers[df_no_outliers['Vict Descent'].isin(valid_categories)]
+
+# Visualize the distribution of 'Vict Age' after removing outliers
+axes[1, 0].hist(df_no_outliers_filtered['Vict Age'], bins=20, color='salmon', edgecolor='black')
+axes[1, 0].set_title('Distribution of Vict Age After Removing Outliers')
+axes[1, 0].set_xlabel('Vict Age')
+axes[1, 0].set_ylabel('Count')
+
+# Visualize the distribution of 'Vict Descent' after removing outliers and filtering
+sns.countplot(data=df_no_outliers_filtered, x='Vict Descent', color='salmon', ax=axes[1, 1])
+axes[1, 1].set_title('Distribution of Vict Descent After Removing Outliers and Filtering')
+axes[1, 1].set_xlabel('Vict Descent')
+axes[1, 1].set_ylabel('Count')
+
+# Adjust layout and show the plot
+plt.tight_layout()
+plt.show()
+
+df = df_no_outliers_filtered
+
+# Remove rows based on 'DATE OCC' range because we only show stats for 2020 to 2022
+initial_rows = len(df)
+df = df[(df['DATE OCC'].dt.year >= 2020) & (df['DATE OCC'].dt.year <= 2022)]
+
+# Count and print the number and percentage of rows removed based on 'DATE OCC' range
+removed_rows = initial_rows - len(df)
+removed_percentage = (removed_rows / initial_rows) * 100
+
+print(f"\nRows removed based on 'DATE OCC' range (2020-2022): {removed_rows} \nPercentage of removed rows: {removed_percentage:.2f}%")
 
 # Save the modified dataset as a new CSV file
 new_file_name = "Preprocessed_Data.csv"
