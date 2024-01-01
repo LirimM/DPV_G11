@@ -133,6 +133,15 @@ plt.ylabel('Count')
 plt.tight_layout()
 plt.show()
 
+# Count the number of rows with 'Vict Age' as -1
+rows_age= len(df[df['Vict Age'] == -1])
+
+# Rows with 'Vict Age' as 0
+print(f"\nNumber of rows with 'Vict Age' as -1: {rows_age}")
+
+# Remove rows where 'Vict Age' is -1
+df = df[df['Vict Age'] != -1]
+
 # Save the modified dataset as a new CSV file
 new_file_name = "Preprocessed_Data.csv"
 df.to_csv(new_file_name, index = False)
