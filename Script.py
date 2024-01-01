@@ -215,6 +215,63 @@ removed_percentage = (removed_rows / initial_rows) * 100
 
 print(f"\nRows removed based on 'DATE OCC' range (2020-2022): {removed_rows} \nPercentage of removed rows: {removed_percentage:.2f}%")
 
+# Map numeric codes to descriptions
+descent_mapping = {
+    'B': 'Black',
+    'H': 'Hispanic/Latin/Mexican',
+    'O': 'Other',
+    'W': 'White',
+    'X': 'Unknown',
+}
+
+# Create a new column 'Vict Descent Desc' based on the mapping
+df['Vict Descent Desc'] = df['Vict Descent'].map(descent_mapping)
+
+# Encode 'Vict Descent' column using Label Encoding
+label_encoder = LabelEncoder()
+df['Vict Descent'] = label_encoder.fit_transform(df['Vict Descent'])
+
+# Data Exploration Summary Statistics
+print("Data Exploration Summary Statistics:")
+print(df.info())
+print(df.describe(include='all'))
+
+# Multivariate Summary Statistics
+print("\nMultivariate Summary Statistics:")
+correlation_matrix = df.corr()
+covariance_matrix = df.cov()
+
+# Customized Pairplot for numerical columns
+numerical_columns = df.select_dtypes(include='number').columns
+plt.figure(figsize=(15, 15))
+pairplot = sns.pairplot(df.sample(10000), vars=numerical_columns, diag_kind='kde', markers='o', hue='Vict Descent Desc', palette='viridis')
+
+# Customize plot titles
+pairplot.fig.suptitle('Pairplot for Numerical Columns', y=1.02)
+
+# Rotate x-axis labels for better readability
+pairplot.set(xticklabels=[])
+
+# Add a legend
+pairplot.add_legend()
+
+# Show the plot
+plt.show()
+
+
+# Correlation Heatmap
+plt.figure(figsize=(10, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title('Correlation Matrix')
+plt.show()
+
+# Covariance Heatmap
+plt.figure(figsize=(10, 8))
+sns.heatmap(covariance_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title('Covariance Matrix')
+plt.show()
+
+
 # Save the modified dataset as a new CSV file
 new_file_name = "Preprocessed_Data.csv"
 df.to_csv(new_file_name, index = False)
