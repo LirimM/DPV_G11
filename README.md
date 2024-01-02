@@ -1,4 +1,4 @@
-# Data Preparation and Visualization - Project
+# Project in the subject "Data Preparation and Visualization" - Computer Engineering Master's Program 23/24 - [University of Prishtina](https://fiek.uni-pr.edu)
 
 ## Overview
 
@@ -17,10 +17,15 @@ After installing Python, these are the libraries required to run the scripts:
 
 - **pandas**: Used for data manipulation and analysis.
 - **matplotlib**: Utilized for creating visualizations to better understand the dataset.
+- **seaborn**: A statistical data visualization library based on Matplotlib.
+- **imblearn**: Used for over-sampling with SMOTE to balance class distribution.
+- **scikit-learn**: A machine learning library, here used for various tasks including imputation, splitting the dataset, and label encoding.
+- **numpy**: A library for numerical operations in Python.
+- **scipy**: A library for scientific and technical computing.
 
 You can run this to install the libraries.
 ```bash
-pip install pandas matplotlib
+pip install pandas matplotlib seaborn imbalanced-learn scikit-learn numpy scipy
 ```
 
 As a last step you will need to extract the dataset and place it into the same directory as the script you are running, or change the path inside the code.
@@ -48,7 +53,18 @@ As a last step you will need to extract the dataset and place it into the same d
 6. **Binarization of 'Sex' Column:**
    - The 'Vict Sex' column is binarized, mapping 'M' to 1, 'F' to 2, and 'X' to 0.
 
-7. **Saving the Preprocessed Data:**
+7. **Handling Class Imbalance with SMOTE:**
+   - A subset of the data is sampled for faster visualization and testing.
+   - Class distribution before and after applying SMOTE is visualized.
+
+8. **Handling 'Vict Age' Outliers and/or Anomalies:**
+   - Rows with 'Vict Age' as -1 are identified and removed.
+   - Z-score is calculated to identify outliers, and visualization is done before and after removing outliers.
+
+9. **Handling/Filtering 'Vict Descent' Categories:**
+   - Categories representing less than 3% of the total numbers in 'Vict Descent' are removed.
+
+10. **Saving the Preprocessed Data:**
    - The preprocessed dataset, containing only specified columns we'll later need for visualizing, is saved as a new CSV file named "Preprocessed_Data.csv."
 
 ## Current Status
