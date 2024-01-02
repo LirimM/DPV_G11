@@ -258,7 +258,6 @@ pairplot.add_legend()
 # Show the plot
 plt.show()
 
-
 # Correlation Heatmap
 plt.figure(figsize=(10, 8))
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
@@ -269,6 +268,29 @@ plt.show()
 plt.figure(figsize=(10, 8))
 sns.heatmap(covariance_matrix, annot=True, cmap='coolwarm', fmt=".2f")
 plt.title('Covariance Matrix')
+plt.show()
+
+# Identify numerical columns for skewness analysis
+numerical_columns = df.select_dtypes(include = 'number').columns
+
+# Skewness for each numerical column
+skewness = df[numerical_columns].apply(lambda x: x.skew())
+
+# Skewness visualized 
+plt.figure(figsize = (12, 6))
+sns.barplot(x = skewness.index, y = skewness.values, color = 'lightblue')
+plt.title('Skewness of Numerical Columns')
+plt.xlabel('Columns')
+plt.ylabel('Skewness')
+plt.xticks(rotation = 45, ha = 'right')
+plt.show()
+
+# Histogram for 'Vict Age' attribute
+plt.figure(figsize = (8, 6))
+sns.histplot(df['Vict Age'], kde = True, color = 'lightblue')
+plt.title('Distribution of Vict Age')
+plt.xlabel('Vict Age')
+plt.ylabel('Frequency')
 plt.show()
 
 
