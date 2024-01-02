@@ -64,8 +64,8 @@ As a last step you will need to extract the dataset and place it into the same d
 9. **Handling/Filtering 'Vict Descent' Categories:**
    - Categories representing less than 3% of the total numbers in 'Vict Descent' are removed.
 
-10. **Saving the Preprocessed Data:**
-   - The preprocessed dataset, containing only specified columns we'll later need for visualizing, is saved as a new CSV file named "Preprocessed_Data.csv."
+0. **Saving the Preprocessed Data:**
+   - The preprocessed dataset, containing only specified columns we'll later need for visualizing, is saved as a new CSV file named "Preprocessed_Data.csv.".
 
 ## Current Status
 
