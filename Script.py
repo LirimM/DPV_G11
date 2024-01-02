@@ -5,7 +5,8 @@ from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
 from scipy import stats
-import numpy as np from sklearn.preprocessing import LabelEncoder
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
 
 # Load the dataset
 file_path = "Crime_Data_from_2020_to_Present_20231113.csv"
