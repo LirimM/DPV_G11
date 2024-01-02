@@ -32,40 +32,50 @@ As a last step you will need to extract the dataset and place it into the same d
 
 ## Steps Taken
 
-1. **Loading the data:**
+ 1. **Loading the data:**
    - The dataset is read from a path and loaded into a pandas DataFrame using the `pd.read_csv` function.
 
-2. **Checking for Null Values and Visualizing:**
+ 2. **Checking for Null Values and Visualizing:**
    - A null value count check and visualization (for easier judgement) is performed on each column of the dataset.
 
-3. **Handling Null Values:**
+ 3. **Handling Null Values:**
    - Specific columns, including 'Vict Sex,' 'Vict Descent,' 'DATE OCC,' 'AREA NAME,' and 'Vict Age,' are analyzed for null values.
    - Null values in 'Vict Sex' and 'Vict Descent' are filled with 'X' for Unknown.
 
-4. **Analyzing 'Vict Age':**
+ 4. **Analyzing 'Vict Age':**
    - The number of rows with 'Vict Age' as 0 is counted and printed.
    - The average age is calculated, and null values and rows with 'Vict Age' as 0 are filled with this average.
 
-5. **Filtering Rows Based on Date Range:**
+ 5. **Filtering Rows Based on Date Range:**
    - The 'DATE OCC' that represents date of occurrence is converted to the  datetime format.
    - Rows outside the date range of 2020-2022 are removed.
 
-6. **Binarization of 'Sex' Column:**
+ 6. **Binarization of 'Sex' Column:**
    - The 'Vict Sex' column is binarized, mapping 'M' to 1, 'F' to 2, and 'X' to 0.
 
-7. **Handling Class Imbalance with SMOTE:**
+ 7. **Handling Class Imbalance with SMOTE:**
    - A subset of the data is sampled for faster visualization and testing.
    - Class distribution before and after applying SMOTE is visualized.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/3f0d0770-b7ff-4683-a5ed-c8045acd6801)
 
-8. **Handling 'Vict Age' Outliers and/or Anomalies:**
+ 8. **Handling 'Vict Age' Outliers and/or Anomalies:**
    - Rows with 'Vict Age' as -1 are identified and removed.
    - Z-score is calculated to identify outliers, and visualization is done before and after removing outliers.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/fe403c85-7f0b-471f-9488-5233dfb2c453)
 
-9. **Handling/Filtering 'Vict Descent' Categories:**
+ 9. **Handling/Filtering 'Vict Descent' Categories:**
    - Categories representing less than 3% of the total numbers in 'Vict Descent' are removed.
 
-0. **Saving the Preprocessed Data:**
-   - The preprocessed dataset, containing only specified columns we'll later need for visualizing, is saved as a new CSV file named "Preprocessed_Data.csv.".
+10. **Correlation and covariance examples:**
+   - Correlation and covariance matrices are generated on numerical attributes.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/8911cc04-90d3-469d-bea9-fc3fce28377e)
+
+11. **Skewness of numerical attributes:**
+   - Skewness of numerical attributes has been generated, as shown below.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/3624996c-a26e-493b-b8a0-0478af43f751)
+
+12. **Saving the Preprocessed Data:**
+   - The preprocessed dataset, containing only specified columns we'll later need for visualizing, is saved as a new CSV file named "Preprocessed_Data.csv."
 
 ## Current Status
 
