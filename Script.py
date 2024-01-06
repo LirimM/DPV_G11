@@ -294,6 +294,24 @@ plt.xlabel('Vict Age')
 plt.ylabel('Frequency')
 plt.show()
 
+# Map numeric codes to descriptions
+sex_mapping = {1: 'Male', 2: 'Female', 0: 'Unknown'}
+
+# Create a new column 'Vict Sex Desc' based on the mapping
+df['Vict Sex Desc'] = df['Vict Sex'].map(sex_mapping)
+
+# Visualization Columns
+visualization_columns = ['Vict Sex Desc', 'Vict Descent Desc', 'DATE OCC', 'AREA NAME', 'Vict Age']
+
+# Visualize Categorical Columns
+categorical_columns = df[visualization_columns].select_dtypes(include='object').columns
+for col in categorical_columns:
+    plt.figure(figsize=(10, 6))
+    df[col].value_counts().plot(kind='bar', color='skyblue')
+    plt.title(f'Bar Plot of {col}')
+    plt.xlabel(col)
+    plt.ylabel('Count')
+    plt.show()
 
 # Save the modified dataset as a new CSV file
 new_file_name = "Preprocessed_Data.csv"
