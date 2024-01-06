@@ -313,6 +313,41 @@ for col in categorical_columns:
     plt.ylabel('Count')
     plt.show()
 
+df_sample = df.sample(10000)
+
+# Drop rows with missing values in 'Vict Sex Desc' column
+df_sample = df_sample.dropna(subset=['Vict Sex Desc'])
+
+# Create a donut chart for 'Vict Sex Desc' without null values
+fig_pie_sex = px.pie(df_sample, names='Vict Sex Desc', title='Distribution of Victim Sex',
+                     labels={'Vict Sex Desc': 'Victim Sex'},
+                     hole=0.4)  # Use 'hole' to create a donut chart
+
+# Add percentage labels
+fig_pie_sex.update_traces(textinfo='percent+label', pull=[0.1, 0.1, 0.1])
+
+# Extract the year from the 'DATE OCC' column
+df_sample['Year'] = df_sample['DATE OCC'].dt.year
+
+# Create a donut chart for the distribution of crimes across all years
+fig_pie_year = px.pie(df_sample, names='Year', title='Crime Distribution Across Years',
+                      hover_data=['DATE OCC'],
+                      hole=0.4)  # Use 'hole' to create a donut chart
+
+# Create subplot
+fig = make_subplots(rows=1, cols=2, specs=[[{'type': 'domain'}, {'type': 'domain'}]],
+                    subplot_titles=['Distribution of Victim Sex', 'Crime Distribution Across Years'])
+
+# Add donut charts to subplot
+fig.add_trace(fig_pie_sex.data[0], row=1, col=1)
+fig.add_trace(fig_pie_year.data[0], row=1, col=2)
+
+# Update layout
+fig.update_layout(height=400, showlegend=True)
+
+# Show the combined plot
+fig.show()
+
 # Save the modified dataset as a new CSV file
 new_file_name = "Preprocessed_Data.csv"
 df.to_csv(new_file_name, index = False)
