@@ -7,6 +7,12 @@ from sklearn.impute import SimpleImputer
 from scipy import stats
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
+import tkinter as tk
+from tkinter import ttk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import pandas as pd
+import plotly.express as px
+from plotly.subplots import make_subplots
 
 # Load the dataset
 file_path = "Crime_Data_from_2020_to_Present_20231113.csv"
@@ -347,6 +353,92 @@ fig.update_layout(height=400, showlegend=True)
 
 # Show the combined plot
 fig.show()
+
+areas = df_sample['AREA NAME'].value_counts().index.tolist()
+sex = df_sample['Vict Sex Desc'].value_counts().index.tolist()
+years = df_sample['Year'].value_counts().index.astype(str).tolist()
+descent = df_sample['Vict Descent Desc'].value_counts().index.tolist()
+
+# Function to filter and display the bar chart
+def display_filtered_chart():
+    area = area_dropdown.get()
+    selected_year = year_dropdown.get()
+    selected_sex = sex_dropdown.get()
+    selected_descent = descent_dropdown.get()
+
+    filtered_data = df_sample.copy()
+    
+    if area != 'All':
+        filtered_data = filtered_data[filtered_data['AREA NAME'] == area]
+
+    if selected_sex != 'All':
+        filtered_data = filtered_data[filtered_data['Vict Sex Desc'] == selected_sex]
+
+    if selected_descent != 'All':
+        filtered_data = filtered_data[filtered_data['Vict Descent Desc'] == selected_descent]
+    
+    if selected_year != 'All':
+        filtered_data = filtered_data[filtered_data['Year'] == int(selected_year)]
+    
+    # Clear previous plot
+    ax.clear()
+    
+    if not filtered_data.empty:
+        # Create bar chart using matplotlib
+        filtered_data['AREA NAME'].value_counts().plot(kind='bar', ax=ax, rot=30)  # Rotate x-axis labels
+        ax.set_title(f'Crime Distribution by Area - Year {selected_year} - Sex {selected_sex} - Descent {selected_descent}')
+        ax.set_xlabel('Area')
+        ax.set_ylabel('Count')
+    else:
+        ax.set_title('No data for selected filters')
+        ax.axis('off')  # Turn off axes if there is no data
+    
+    # Update the existing output area with new plot
+    canvas.draw()
+
+# Create Tkinter GUI
+root = tk.Tk()
+root.title("Crime Distribution")
+
+# Dropdowns
+area_label = ttk.Label(root, text="Area:")
+area_dropdown = ttk.Combobox(root, values=['All'] + areas)
+area_dropdown.set('All')
+
+year_label = ttk.Label(root, text="Year:")
+year_dropdown = ttk.Combobox(root, values=['All'] + years)
+year_dropdown.set('All')
+
+sex_label = ttk.Label(root, text="Sex:")
+sex_dropdown = ttk.Combobox(root, values=['All'] + sex)
+sex_dropdown.set('All')
+
+descent_label = ttk.Label(root, text="Descent:")
+descent_dropdown = ttk.Combobox(root, values=['All'] + descent)
+descent_dropdown.set('All')
+
+# Button
+filter_button = ttk.Button(root, text="Filter", command=display_filtered_chart)
+
+# Output area (use matplotlib and FigureCanvasTkAgg)
+fig, ax = plt.subplots(figsize=(10, 6))  # Adjust the figure size as needed
+canvas = FigureCanvasTkAgg(fig, master=root)
+canvas_widget = canvas.get_tk_widget()
+
+# Layout
+area_label.grid(row=0, column=0, padx=3, pady=5)
+area_dropdown.grid(row=0, column=1, padx=3, pady=5)
+year_label.grid(row=0, column=2, padx=3, pady=5)
+year_dropdown.grid(row=0, column=3, padx=3, pady=5)
+sex_label.grid(row=0, column=4, padx=3, pady=5)
+sex_dropdown.grid(row=0, column=5, padx=3, pady=5)
+descent_label.grid(row=0, column=6, padx=3, pady=5)
+descent_dropdown.grid(row=0, column=7, padx=3, pady=5)
+filter_button.grid(row=0, column=8, padx=3, pady=5)
+canvas_widget.grid(row=1, column=0, columnspan=9, padx=8, pady=8)
+
+# Run Tkinter event loop
+root.mainloop()
 
 # Save the modified dataset as a new CSV file
 new_file_name = "Preprocessed_Data.csv"
