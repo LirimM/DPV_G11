@@ -77,9 +77,41 @@ As a last step you will need to extract the dataset and place it into the same d
 12. **Saving the Preprocessed Data:**
    - The preprocessed dataset, containing only specified columns we'll later need for visualizing, is saved as a new CSV file named "Preprocessed_Data.csv."
 
+## Visualization
+This part focuses on visualizing numerical and categorical columns in the dataset using bar plots, donut charts, 3D scatter plots and a filtered bar chart. Each of visualizations represents the distribution of values.
+
+ 1. **Distribution of Victims Age**
+   - This is a histogram illustrating the distribution of ages ('Vict Age') among crime victims in the dataset.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/54f89736-b828-4282-8660-c0184c186385)
+
+ 2. **Distribution of Victims Sex**
+   - This is a bar plot illustrating the distribution of Victims Sex ('Vict Sex') among crime victims in the dataset.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/101abbba-0bfc-405b-b0c1-c0f15e58eebc)
+
+ 3. **Distribution of Victims Descent**
+   - This is a bar plot illustrating the distribution of Victims Descent ('Vict Descent') among crime victims in the dataset.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/c20344c9-a733-4def-a252-126dcf23db71)
+
+ 4. **Distribution of Areas**
+   - This is a bar plot illustrating the distribution of Areas ('Area name') where crimes happend from the data in the dataset.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/b9c53290-0961-4cb1-bbf5-807e081b06a8)
+
+ 5. **Distribution of Victims Sex and Crime Distribution Across Years**
+   - Two donut charts are created to illustrate the distribution of crime based on victim sex and across different years (Sample 10000). These charts provide a clear visual representation of the data, with percentage labels for enhanced understanding.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/a137a55e-1464-400a-9128-762125fae2bb)
+   
+ 6. **3D scatter plots showing relationships between Areas, Victims Age, Victims Descent, and Victims Sex**
+   - Two 3D scatter plots are generated to explore relationships between 'AREA NAME', 'Vict Age', 'Vict Descent Desc', and 'Vict Sex Desc'(Sample 10000). These visualizations offer a unique perspective on the dataset.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/6685a300-00a5-453d-aac9-6ebf22c8b18f)
+   
+ 7. **Filtered Bar Chart**
+   - A function and GUI are implemented to allow users to filter the data and generate a bar chart based on selected criteria. The bar chart dynamically updates based on user-selected options for area, year, sex, and descent.
+   - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/df6c02ee-3a19-45bd-81aa-187ccde7d16f)
+
+
 ## Current Status
 
-The original dataset is read from the path and preprocessed, but is not overwritten. The preprocessed dataset can be found in the same diretory as "Preprocessed_Data.csv", after you successfully execute the script. This is the progress until now, other phases will include further processing & analysing and visualizing will be done in the last phase of the project.
+The initial phase involved reading and preprocessing the original dataset, saving the cleaned version as 'Preprocessed_Data.csv' in the same directory. Subsequently, the project advanced through successive phases, incorporating further data processing, in-depth analysis, and the implementation of comprehensive visualizations. The culmination of these efforts is evident in the completion of the last project phase, providing a holistic exploration and understanding of the crime dataset.
 
 ## Contributors
 
