@@ -103,11 +103,11 @@ This part focuses on visualizing numerical and categorical columns in the datase
    - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/a137a55e-1464-400a-9128-762125fae2bb)
    
  6. **3D scatter plots showing relationships between Areas, Victims Age, Victims Descent and Victims Sex**
-   - Two 3D scatter plots are generated to explore relationships between 'AREA NAME', 'Vict Age', 'Vict Descent Desc', and 'Vict Sex Desc'(Sample 10000). These visualizations offer a unique perspective on the dataset.
+   - Two 3D scatter plots are generated to explore relationships between 'AREA NAME', 'Vict Age', 'Vict Descent Desc', and 'Vict Sex Desc' (Sample 10000). These visualizations offer a unique perspective on the dataset.
    - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/6685a300-00a5-453d-aac9-6ebf22c8b18f)
    
  7. **Filtered Bar Chart**
-   - A function and GUI are implemented to allow users to filter the data and generate a bar chart based on selected criteria. The bar chart dynamically updates based on user-selected options for area, year, sex, and descent.
+   - A function and GUI are implemented to allow users to filter the data and generate a bar chart based on selected criteria. The bar chart dynamically updates based on user-selected options for area, year, sex, and descent (Sample 10000).
    - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/df6c02ee-3a19-45bd-81aa-187ccde7d16f)
 
 
