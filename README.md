@@ -100,7 +100,7 @@ This part focuses on visualizing numerical and categorical columns in the datase
    - Two donut charts are created to illustrate the distribution of crime based on victim sex and across different years (Sample 10000). These charts provide a clear visual representation of the data, with percentage labels for enhanced understanding.
    - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/a137a55e-1464-400a-9128-762125fae2bb)
    
- 6. **3D scatter plots showing relationships between Areas, Victims Age, Victims Descent, and Victims Sex**
+ 6. **3D scatter plots showing relationships between Areas, Victims Age, Victims Descent and Victims Sex**
    - Two 3D scatter plots are generated to explore relationships between 'AREA NAME', 'Vict Age', 'Vict Descent Desc', and 'Vict Sex Desc'(Sample 10000). These visualizations offer a unique perspective on the dataset.
    - ![image](https://github.com/LirimM/DPV_G11/assets/46811308/6685a300-00a5-453d-aac9-6ebf22c8b18f)
    
