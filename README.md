@@ -22,10 +22,12 @@ After installing Python, these are the libraries required to run the scripts:
 - **scikit-learn**: A machine learning library, here used for various tasks including imputation, splitting the dataset, and label encoding.
 - **numpy**: A library for numerical operations in Python.
 - **scipy**: A library for scientific and technical computing.
+- **plotly**: A library for interactive and browser-based plotting.
+- **tkinter**: The standard Python interface to the Tk GUI toolkit.
 
 You can run this to install the libraries.
 ```bash
-pip install pandas matplotlib seaborn imbalanced-learn scikit-learn numpy scipy
+pip install pandas matplotlib seaborn imbalanced-learn scikit-learn numpy scipy plotly tk
 ```
 
 As a last step you will need to extract the dataset and place it into the same directory as the script you are running, or change the path inside the code.
