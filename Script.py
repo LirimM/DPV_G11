@@ -306,6 +306,12 @@ sex_mapping = {1: 'Male', 2: 'Female', 0: 'Unknown'}
 # Create a new column 'Vict Sex Desc' based on the mapping
 df['Vict Sex Desc'] = df['Vict Sex'].map(sex_mapping)
 
+# Save the modified dataset as a new CSV file
+new_file_name = "Preprocessed_Data.csv"
+df.to_csv(new_file_name, index = False)
+
+print(f"\nFile saved as '{new_file_name}'")
+
 # Visualization Columns
 visualization_columns = ['Vict Sex Desc', 'Vict Descent Desc', 'DATE OCC', 'AREA NAME', 'Vict Age']
 
@@ -319,12 +325,12 @@ for col in categorical_columns:
     plt.ylabel('Count')
     plt.show()
 
+#Sample with 10000
 df_sample = df.sample(10000)
-
-# Drop rows with missing values in 'Vict Sex Desc' column
 df_sample = df_sample.dropna(subset=['Vict Sex Desc'])
 
-# Create a donut chart for 'Vict Sex Desc' without null values
+
+# Create a donut chart for 'Vict Sex Desc'
 fig_pie_sex = px.pie(df_sample, names='Vict Sex Desc', title='Distribution of Victim Sex',
                      labels={'Vict Sex Desc': 'Victim Sex'},
                      hole=0.4)  # Use 'hole' to create a donut chart
@@ -340,16 +346,33 @@ fig_pie_year = px.pie(df_sample, names='Year', title='Crime Distribution Across 
                       hover_data=['DATE OCC'],
                       hole=0.4)  # Use 'hole' to create a donut chart
 
-# Create subplot
-fig = make_subplots(rows=1, cols=2, specs=[[{'type': 'domain'}, {'type': 'domain'}]],
-                    subplot_titles=['Distribution of Victim Sex', 'Crime Distribution Across Years'])
+# Create a 3D scatter plot with 'AREA NAME', 'Vict Age', and 'Vict Descent Desc'
+fig_3d_date_age_sex = px.scatter_3d(df_sample, x='AREA NAME', y='Vict Age', z='Vict Descent Desc', color='Vict Descent Desc',
+                                     color_discrete_map={'Asian': 'red', 'Black': 'blue', 'White': 'green', 'Other': 'orange'})
 
-# Add donut charts to subplot
+
+
+# Create a 3D scatter plot with 'Vict Descent Desc', 'Vict Sex Desc', and 'AREA NAME'
+fig_3d_descent_sex_area = px.scatter_3d(df_sample, x='Vict Descent Desc', y='Vict Sex Desc', z='AREA NAME', color='Vict Sex Desc',
+                                         color_discrete_map={'Male': 'red', 'Female': 'blue', 'Other': 'green'})
+
+
+
+# Create subplot
+fig = make_subplots(rows=2, cols=2, specs=[[{'type': 'domain'}, {'type': 'domain'}], [{'type': 'scatter3d'}, {'type': 'scatter3d'}]],
+                    subplot_titles=['Distribution of Victim Sex', 'Crime Distribution Across Years',
+                                     '3D scatter plot with AREA NAME, Vict Age, and Vict Descent Desc', 
+                                    '3D scatter plot with Vict Descent Desc, Vict Sex Desc, and AREA NAME'])
+
+
+# Add donut charts and 3D scatter plots to subplot
 fig.add_trace(fig_pie_sex.data[0], row=1, col=1)
 fig.add_trace(fig_pie_year.data[0], row=1, col=2)
+fig.add_trace(fig_3d_date_age_sex.data[0], row=2, col=1)
+fig.add_trace(fig_3d_descent_sex_area.data[0], row=2, col=2)
 
 # Update layout
-fig.update_layout(height=400, showlegend=True)
+fig.update_layout(height=800, showlegend=True)
 
 # Show the combined plot
 fig.show()
@@ -439,9 +462,3 @@ canvas_widget.grid(row=1, column=0, columnspan=9, padx=8, pady=8)
 
 # Run Tkinter event loop
 root.mainloop()
-
-# Save the modified dataset as a new CSV file
-new_file_name = "Preprocessed_Data.csv"
-df.to_csv(new_file_name, index = False)
-
-print(f"\nFile saved as '{new_file_name}'")
